@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,16 +9,28 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f9f9f9;
+      background-color: #ffe6f2; /* Light pink background */
       font-family: Arial, sans-serif;
+      background-image: url('https://slidechef.net/wp-content/uploads/2023/10/Free-Heart-Background.jpg'); /* Background with hearts */
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    h1 {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: 'Dancing Script', cursive; /* Handwritten font */
+      font-weight: bold;
+      color: blue; /* Blue text */
+      font-size: 36px;
+      margin: 0;
     }
     img {
-      max-width: 300px;
+      max-width: 100%; /* Make image fit to screen while maintaining aspect ratio */
+      max-height: 100%;
       border-radius: 15px;
-      margin-bottom: 20px;
     }
     button {
       padding: 10px 20px;
@@ -28,7 +40,9 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-bottom: 20px;
+      position: absolute;
+      left: 20px; /* Move button to the left */
+      bottom: 20px; /* Position button at the bottom */
     }
     .balloon {
       width: 100px;
@@ -43,6 +57,7 @@
       font-size: 16px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
       animation: float 4s ease-in-out infinite;
+      cursor: pointer; /* Make balloons clickable */
     }
     @keyframes float {
       0% {
@@ -55,11 +70,59 @@
         transform: translateY(0);
       }
     }
+    .dropdown {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .dropdown label {
+      font-size: 16px;
+      margin-right: 5px;
+    }
+    .dropdown select {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+    }
+    #display-message {
+      position: absolute;
+      left: 20px; /* Position the message on the left */
+      top: 55%; /* Position above the "CLICK" button */
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      width: 200px;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #ffe6f2; /* Light pink background for message display */
+      display: none; /* Hidden until message is displayed */
+    }
   </style>
 </head>
 <body>
+  <h1>This is Addy!!!</h1> <!-- Title in handwritten font -->
+
+  <div class="dropdown">
+    <label for="menu">Look:</label> <!-- Changed label from Menu to Look -->
+    <select id="menu" onchange="handleDropdownChange(event)">
+      <option value="">-- Select --</option> <!-- Added blank selection -->
+      <option value="about-me">About Me</option>
+      <option value="my-family">My Family</option>
+      <option value="my-favorite-people">My Favorite People</option> <!-- Updated option -->
+    </select>
+  </div>
+
+  <div id="display-message"></div> <!-- Display message -->
+
+  <button onclick="createBalloons()">CLICK</button> <!-- Button text changed -->
+
   <img src="https://imgur.com/syp30xh.jpg" alt="Centered Image">
-  <button onclick="createBalloons()">Click to see balloons</button>
   <div id="balloon-container"></div>
 
   <script>
@@ -73,16 +136,38 @@
         const balloon = document.createElement("div");
         balloon.className = "balloon";
         balloon.style.backgroundColor = colors[index];
-        balloon.style.left = `${Math.random() * 60 + 20}%`; // Random horizontal position
-        balloon.style.top = `50%`; // Middle of the page
-        balloon.textContent = message;
-        container.appendChild(balloon);
+        balloon.style.left = `${10 + Math.random() * 80}%`; // Scatter balloons horizontally around image
+        balloon.style.top = `${10 + Math.random() * 70}%`; // Scatter vertically outside image area
+        balloon.textContent = "Click";
 
-        setTimeout(() => {
-          balloon.remove();
-        }, 4000); // Remove balloons after 4 seconds
+        balloon.onclick = () => {
+          const display = document.getElementById("display-message");
+          display.textContent = message; // Display message on click
+          display.style.display = "block"; // Show message
+          balloon.remove(); // Remove balloon on click
+        };
+
+        container.appendChild(balloon);
       });
     }
+
+    function handleDropdownChange(event) {
+      const value = event.target.value;
+      const display = document.getElementById("display-message");
+      if (value === "about-me") {
+        display.textContent = "Hello I am Adelina and I love to sing, play with my friends and shopping";
+        display.style.display = "block";
+      } else if (value === "my-family") {
+        display.innerHTML = `<img src='https://ih1.redbubble.net/image.5223780878.8819/flat,750x,075,f-pad,750x1000,f8f8f8.jpg' alt='My Family' style='max-width: 100%; border-radius: 10px;'>`;
+        display.style.display = "block";
+      } else if (value === "my-favorite-people") {
+        display.textContent = "Mom!,Augy!,Tia!, Tia!,Budds!"; // Updated to My Favorite People
+        display.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
