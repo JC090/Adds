@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balloons and Image</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    img {
+      max-width: 300px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      color: white;
+      background-color: blue;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .balloon {
+      width: 100px;
+      height: 150px;
+      background-color: pink;
+      border-radius: 50%;
+      position: absolute;
+      text-align: center;
+      line-height: 140px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-30px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="https://imgur.com/syp30xh.jpg" alt="Centered Image">
+  <button onclick="createBalloons()">Click to see balloons</button>
+  <div id="balloon-container"></div>
+
+  <script>
+    const messages = ["Little Love", "Princess", "Smart", "Beautiful", "Funny"];
+    const colors = ["red", "blue", "green", "yellow", "purple"];
+
+    function createBalloons() {
+      const container = document.getElementById("balloon-container");
+      container.innerHTML = ""; // Clear previous balloons
+      messages.forEach((message, index) => {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.backgroundColor = colors[index];
+        balloon.style.left = `${Math.random() * 60 + 20}%`; // Random horizontal position
+        balloon.style.top = `50%`; // Middle of the page
+        balloon.textContent = message;
+        container.appendChild(balloon);
+
+        setTimeout(() => {
+          balloon.remove();
+        }, 4000); // Remove balloons after 4 seconds
+      });
+    }
+  </script>
+</body>
+</html>
